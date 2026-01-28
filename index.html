@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sharif Osman Hadi | The Voice That Never Dies</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Homenaje&family=Tajawal:wght@200;300;400;500;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet">
+  <script>
+    if (window.tailwind) {
+      window.tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Tajawal', 'sans-serif'],
+              serif: ['"Playfair Display"', 'serif'],
+              display: ['Homenaje', 'sans-serif'],
+              bengali: ['"Hind Siliguri"', 'sans-serif'],
+            },
+            colors: {
+              deep: {
+                900: '#0A0A0A',
+                800: '#111111',
+                700: '#1A1A1A',
+              },
+              crimson: {
+                DEFAULT: '#E03C31',
+                glow: 'rgba(224, 60, 49, 0.5)',
+              }
+            },
+            animation: {
+              'float': 'float 15s infinite ease-in-out',
+              'float-delayed': 'float 18s infinite ease-in-out reverse',
+              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0) translateX(0)' },
+                '33%': { transform: 'translateY(-20px) translateX(10px)' },
+                '66%': { transform: 'translateY(10px) translateX(-5px)' },
+              }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom scrollbar for webkit */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #0A0A0A;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #333;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #E03C31;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .font-bengali {
+      font-family: 'Hind Siliguri', sans-serif !important;
+    }
+  </style>
+
+
+</head>
+
+<body class="bg-[#0A0A0A] text-gray-200 antialiased overflow-x-hidden">
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+
+</html>
