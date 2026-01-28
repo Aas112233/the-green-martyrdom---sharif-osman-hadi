@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Maximize2, X, Loader2, Play, Filter, Image, Film, AlertCircle } from 'lucide-react';
+import { Maximize2, X, Loader2, Play, Filter, Image, Film, AlertCircle, ImageOff } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface GalleryItem {
@@ -85,11 +85,12 @@ const VideoThumbnail: React.FC<{ src: string }> = ({ src }) => {
 
   if (hasError) {
     return (
-      <div className="w-full h-full bg-white/5 flex flex-col items-center justify-center p-4 text-center">
-        <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center mb-2">
-          <Film className="text-gray-500" size={20} />
+      <div className="w-full h-64 bg-white/5 flex flex-col items-center justify-center p-6 text-center border-b border-white/5 transition-colors group-hover:bg-white/10">
+        <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mb-4 backdrop-blur-sm shadow-inner ring-1 ring-white/5">
+          <Film className="text-gray-500 group-hover:text-crimson transition-colors duration-500" size={32} />
         </div>
-        <span className="text-[10px] text-gray-500 uppercase tracking-widest">Preview Unavailable</span>
+        <span className="text-xs text-gray-400 font-bold uppercase tracking-widest mb-1">Preview Unavailable</span>
+        <span className="text-[10px] text-gray-600">Media source unreachable</span>
       </div>
     );
   }
@@ -127,12 +128,25 @@ const VideoThumbnail: React.FC<{ src: string }> = ({ src }) => {
 
 const GalleryImage: React.FC<{ src: string; caption: string }> = ({ src, caption }) => {
   const [loaded, setLoaded] = useState(false);
+  const [hasError, setHasError] = useState(false);
+
+  if (hasError) {
+    return (
+      <div className="w-full h-64 bg-white/5 flex flex-col items-center justify-center p-6 text-center border-b border-white/5 transition-colors group-hover:bg-white/10">
+        <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mb-4 backdrop-blur-sm shadow-inner ring-1 ring-white/5">
+          <ImageOff className="text-gray-500 group-hover:text-crimson transition-colors duration-500" size={32} />
+        </div>
+        <span className="text-xs text-gray-400 font-bold uppercase tracking-widest mb-1">Image Unavailable</span>
+        <span className="text-[10px] text-gray-600">Media source unreachable</span>
+      </div>
+    );
+  }
 
   return (
     <>
       {/* Skeleton */}
       {!loaded && (
-        <div className="absolute inset-0 bg-white/10 animate-pulse z-20 h-48" />
+        <div className="absolute inset-0 bg-white/10 animate-pulse z-20 h-64" />
       )}
 
       {/* Hover Overlay - Only show when loaded to avoid weird overlay on skeleton */}
@@ -144,8 +158,8 @@ const GalleryImage: React.FC<{ src: string; caption: string }> = ({ src, caption
         className={`w-full h-auto object-cover transform group-hover:scale-105 transition-all duration-700 grayscale group-hover:grayscale-0 ${loaded ? 'opacity-100' : 'opacity-0'}`}
         loading="lazy"
         onLoad={() => setLoaded(true)}
-        onError={(e) => {
-          (e.target as HTMLImageElement).src = `https://placehold.co/600x400/1a1a1a/FFF?text=Image+Unavailable`;
+        onError={() => {
+          setHasError(true);
           setLoaded(true);
         }}
       />
