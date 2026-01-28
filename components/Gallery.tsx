@@ -111,7 +111,9 @@ const VideoThumbnail: React.FC<{ src: string }> = ({ src }) => {
         loop
         playsInline
         preload="metadata"
+        referrerPolicy="no-referrer"
         onLoadedData={() => setLoaded(true)}
+
         onError={() => {
           setHasError(true);
           setLoaded(true);
@@ -157,7 +159,9 @@ const GalleryImage: React.FC<{ src: string; caption: string }> = ({ src, caption
         alt={caption}
         className={`w-full h-auto object-cover transform group-hover:scale-105 transition-all duration-700 grayscale group-hover:grayscale-0 ${loaded ? 'opacity-100' : 'opacity-0'}`}
         loading="lazy"
+        referrerPolicy="no-referrer"
         onLoad={() => setLoaded(true)}
+
         onError={() => {
           setHasError(true);
           setLoaded(true);
@@ -179,7 +183,13 @@ const Gallery: React.FC = () => {
   useEffect(() => {
     const fetchGallery = async () => {
       try {
-        const response = await fetch('/api/uploads/', {
+        // Use absolute URL in production to avoid 404s on Apache (InfinityFree)
+        // Use relative URL in dev to leverage Vite proxy
+        const apiUrl = import.meta.env.PROD
+          ? 'https://api.hadiarchive.com/api/uploads/'
+          : '/api/uploads/';
+
+        const response = await fetch(apiUrl, {
           method: 'GET',
           headers: { 'Accept': 'application/json' }
         });
@@ -334,6 +344,7 @@ const Gallery: React.FC = () => {
                   src={selectedItem.src}
                   controls
                   autoPlay
+                  referrerPolicy="no-referrer"
                   className="w-full max-h-[85vh] rounded-lg shadow-2xl border border-white/10"
                   onError={(e) => {
                     e.currentTarget.style.display = 'none';
@@ -350,6 +361,7 @@ const Gallery: React.FC = () => {
               <img
                 src={selectedItem.src}
                 alt="Full view"
+                referrerPolicy="no-referrer"
                 className="max-w-full max-h-[90vh] rounded-lg shadow-2xl border border-white/10 mx-auto"
               />
             )}
